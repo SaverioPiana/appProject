@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'color_palette.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: mainPalette,
-      ),
+      theme: ThemeData(),
       home: const MyHomePage(),
     );
   }
@@ -31,9 +28,6 @@ class MyHomePage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 40),
@@ -60,9 +54,6 @@ class HelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Help Page"),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 40),
@@ -78,26 +69,32 @@ class HelpPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.account_circle_outlined,
+      bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: true,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
+        items: const [
+          BottomNavigationBarItem(
+            tooltip: "",
+            icon: Icon(
+              Icons.account_circle_outlined,
+            ),
+            label: "profile",
           ),
-          label: "profile",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.groups,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.groups,
+            ),
+            label: "play",
           ),
-          label: "play",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.emoji_events_outlined,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_events_outlined,
+            ),
+            label: "leaderboard",
           ),
-          label: "leaderboard",
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
