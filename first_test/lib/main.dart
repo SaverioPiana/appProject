@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+Color colore = Colors.black87;
+
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  final Color icon_color = (Colors.black87);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.green,
+        primarySwatch: Color.fromARGB(255, 71, 71, 71),
       ),
       home: const MyHomePage(),
     );
@@ -32,20 +34,11 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
   @override
   Widget build(BuildContext context) {
     void navigateToHelpPage() {
       Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HelpPage()));
+          context, MaterialPageRoute(builder: (context) => const HelpPage()));
     }
 
     return Scaffold(
@@ -89,15 +82,36 @@ class HelpPage extends StatelessWidget {
             children: [
               const Text("Click the button to return to the Home Page"),
               ElevatedButton(
-                onPressed: (() {
-                  Navigator.pop(context);
-                }),
+                onPressed: (() => Navigator.pop(context)),
                 child: const Text('Home'),
               ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(items: const [
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.account_circle_outlined,
+            color: Colors.black87,
+          ),
+          label: "profile",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.groups,
+            color: Colors.black87,
+          ),
+          label: "play",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.emoji_events_outlined,
+            color: Colors.black87,
+          ),
+          label: "leaderboard",
+        ),
+      ]),
     );
   }
 }
