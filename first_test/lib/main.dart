@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-Color colore = Colors.black87;
+import 'color_palette.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,23 +7,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  final Color icon_color = (Colors.black87);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Color.fromARGB(255, 71, 71, 71),
+        colorScheme: mainPalette,
       ),
       home: const MyHomePage(),
     );
@@ -93,21 +82,18 @@ class HelpPage extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.account_circle_outlined,
-            color: Colors.black87,
           ),
           label: "profile",
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.groups,
-            color: Colors.black87,
           ),
           label: "play",
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.emoji_events_outlined,
-            color: Colors.black87,
           ),
           label: "leaderboard",
         ),
