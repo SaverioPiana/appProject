@@ -23,8 +23,8 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void navigateToHelpPage() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HelpPage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ProfilePage()));
     }
 
     return Scaffold(
@@ -49,8 +49,14 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class HelpPage extends StatelessWidget {
-  const HelpPage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +79,7 @@ class HelpPage extends StatelessWidget {
         showUnselectedLabels: true,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
+        currentIndex: 1,
         items: const [
           BottomNavigationBarItem(
             tooltip: "",
