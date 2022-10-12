@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,9 +23,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void navigateToHelpPage() {
+    void navigateToGamePage() {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ProfilePage()));
+          MaterialPageRoute(builder: (context) => const GamePage()));
     }
 
     return Scaffold(
@@ -38,13 +39,60 @@ class MyHomePage extends StatelessWidget {
                 "Click the button for help",
               ),
               ElevatedButton(
-                onPressed: navigateToHelpPage,
-                child: const Icon(Icons.help),
+                onPressed: navigateToGamePage,
+                child: const Icon(Icons.map),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class GamePage extends StatefulWidget {
+  const GamePage({super.key});
+
+  @override
+  State<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends State<GamePage> {
+  late GoogleMapController mapController;
+
+  final LatLng acilia = const LatLng(41.783790, 12.360890);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('PROVA'),
+          backgroundColor: Colors.green[700],
+        ),
+        body: GoogleMap(
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: acilia,
+            zoom: 11.0,
+          ),
+          zoomControlsEnabled: false,
+          buildingsEnabled: true,
+          compassEnabled: false,
+          mapType: MapType.normal,
+          onCameraIdle: () {
+            const Scaffold(
+              body:  Center(
+                child: 
+                 Text("MOVITEEEEE")),
+            );
+          },
+        ),
     );
   }
 }
