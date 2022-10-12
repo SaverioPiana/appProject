@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,24 +7,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.green,
-      ),
+      theme: ThemeData(),
       home: const MyHomePage(),
     );
   }
@@ -32,26 +21,14 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
   @override
   Widget build(BuildContext context) {
-    void navigateToHelpPage() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HelpPage()));
+    void navigateToGamePage() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const GamePage()));
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 40),
@@ -62,8 +39,8 @@ class MyHomePage extends StatelessWidget {
                 "Click the button for help",
               ),
               ElevatedButton(
-                onPressed: navigateToHelpPage,
-                child: const Icon(Icons.help),
+                onPressed: navigateToGamePage,
+                child: const Icon(Icons.map),
               ),
             ],
           ),
@@ -73,14 +50,64 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class HelpPage extends StatelessWidget {
-  const HelpPage({Key? key}) : super(key: key);
+class GamePage extends StatefulWidget {
+  const GamePage({super.key});
+
+  @override
+  State<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends State<GamePage> {
+  late GoogleMapController mapController;
+
+  final LatLng acilia = const LatLng(41.783790, 12.360890);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Help Page"),
-      ),
+        appBar: AppBar(
+          title: const Text('PROVA'),
+          backgroundColor: Colors.green[700],
+        ),
+        body: GoogleMap(
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: acilia,
+            zoom: 11.0,
+          ),
+          zoomControlsEnabled: false,
+          buildingsEnabled: true,
+          compassEnabled: false,
+          mapType: MapType.normal,
+          onCameraIdle: () {
+            const Scaffold(
+              body:  Center(
+                child: 
+                 Text("MOVITEEEEE")),
+            );
+          },
+        ),
+    );
+  }
+}
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 40),
@@ -89,14 +116,39 @@ class HelpPage extends StatelessWidget {
             children: [
               const Text("Click the button to return to the Home Page"),
               ElevatedButton(
-                onPressed: (() {
-                  Navigator.pop(context);
-                }),
+                onPressed: (() => Navigator.pop(context)),
                 child: const Text('Home'),
               ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: true,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
+        currentIndex: 1,
+        items: const [
+          BottomNavigationBarItem(
+            tooltip: "",
+            icon: Icon(
+              Icons.account_circle_outlined,
+            ),
+            label: "profile",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.groups,
+            ),
+            label: "play",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_events_outlined,
+            ),
+            label: "leaderboard",
+          ),
+        ],
       ),
     );
   }
